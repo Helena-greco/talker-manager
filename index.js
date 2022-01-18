@@ -23,6 +23,20 @@ app.get('/talker', (_req, res) => {
   res.status(HTTP_OK_STATUS).json(talkers);
 });
 
+// Exemplo da aula do course
+
+app.get('/talker/:id', (req, res) => {
+  const talkers = JSON.parse(fs.readFileSync('./talker.json', 'utf8'));
+
+  const { id } = req.params;
+  const talkerId = talkers.find((talker) => talker.id === Number(id));
+  if (!talkerId) {
+    res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  } 
+  
+  res.status(200).send(talkerId);
+});
+
 app.listen(PORT, () => {
   console.log('Online');
 });
