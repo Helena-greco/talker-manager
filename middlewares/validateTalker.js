@@ -34,6 +34,14 @@ const validateAge = (req, res, next) => {
   next();
 };
 
+const validateRate = (req, res, next) => {
+  const { talk } = req.body;
+  if (talk.rate < 1 || talk.rate > 5) {
+    return res.status(400).json({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
+  }
+  next();
+};
+
 /** Ref: https://www.regextester.com/99555 */
 
 const validateDateAndTalk = (req, res, next) => {
@@ -50,14 +58,6 @@ const validateDateAndTalk = (req, res, next) => {
     return res.status(400).json({ message: 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"' });
   }
 
-  next();
-};
-
-const validateRate = (req, res, next) => {
-  const { talk } = req.body;
-  if (talk.rate < 1 || talk.rate > 5) {
-    return res.status(400).json({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
-  }
   next();
 };
 
