@@ -11,7 +11,7 @@ const editTalker = (req, res) => {
   talkers.push(newTalker);
   
   fs.writeFileSync('./talker.json', JSON.stringify([newTalker]));
-  return res.status(201).json(newTalker);
+  return res.status(200).send(newTalker);
 };
 
 module.exports = editTalker;

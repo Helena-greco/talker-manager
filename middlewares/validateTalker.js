@@ -42,18 +42,26 @@ const validateRate = (req, res, next) => {
   next();
 };
 
-/** Ref: https://www.regextester.com/99555 */
+/** Ref: https://github.com/tryber/sd-014-b-project-talker-manager/pull/66/commits/f1fd5da94cb653c5c4c2b886f3d2197bc37ebd7d */
+// Consulta no repo do Fernando Serpa sobre o if da função validateTalk para passar no req 5
 
-const validateDateAndTalk = (req, res, next) => {
+const validateTalk = (req, res, next) => {
   const { talk } = req.body;
-  const date = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
-  
-  if (!talk || !talk.watchedAt || !talk.rate) {
+
+  if (!talk || talk.watchedAt === undefined || talk.rate === undefined) {
     return res.status(400).json({
       message: 'O campo "talk" é obrigatório e "watchedAt" e "rate" não podem ser vazios',
     });
   }
 
+  next();
+};
+
+const validateDate = (req, res, next) => {
+  const { talk } = req.body;
+  /** Ref: https://www.regextester.com/99555 */
+  const date = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
+  
   if (!date.test(talk.watchedAt)) {
     return res.status(400).json({ message: 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"' });
   }
@@ -77,7 +85,8 @@ module.exports = {
   validateToken,
   validateName,
   validateAge,
-  validateDateAndTalk,
+  validateTalk,
+  validateDate,
   validateRate,
   createTalker,
 };
