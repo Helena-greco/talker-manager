@@ -9,7 +9,7 @@ const {
   validateTalk,
   validateDate, 
   validateRate, createTalker } = require('./middlewares/validateTalker');
-const talkerId = require('./middlewares/talkerId');
+const { talkersId, deleteById } = require('./middlewares/talkerId');
 const editTalker = require('./middlewares/editTalker');
 
 const app = express();
@@ -22,7 +22,7 @@ const PORT = '3000';
 app.get('/talker', talker);
 
 // Req 2, exemplo da aula do course
-app.get('/talker/:id', talkerId);
+app.get('/talker/:id', talkersId);
 
 // Req 3
 app.post('/login', login);
@@ -34,6 +34,9 @@ app.post('/talker', validateToken, validateName, validateAge,
 // Req 5
 app.put('/talker/:id', validateToken, validateName, validateAge,
 validateTalk, validateDate, validateRate, editTalker);
+
+// Req 6
+app.delete('/talker/:id', validateToken, deleteById);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
