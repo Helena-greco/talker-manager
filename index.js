@@ -1,6 +1,6 @@
 const express = require('express');
-const fs = require('fs');
 const bodyParser = require('body-parser');
+const talker = require('./middlewares/talker');
 const login = require('./middlewares/login');
 const { 
   validateToken, 
@@ -17,14 +17,7 @@ const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
 // Req 1
-app.get('/talker', (_req, res) => {
-  const talkers = JSON.parse(fs.readFileSync('./talker.json', 'utf8'));
-  if (talkers.length === 0) {
-    res.status(HTTP_OK_STATUS).json([]);
-  }
-
-  res.status(HTTP_OK_STATUS).json(talkers);
-});
+app.get('/talker', talker);
 
 // Req 2, exemplo da aula do course
 app.get('/talker/:id', talkerId);
